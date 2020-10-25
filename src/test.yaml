@@ -1,0 +1,30 @@
+one: &one
+  a: 'A1'
+  b: 'B1'
+  c: 'C1'
+two: &two
+  b: 'B2'
+three: &three
+  c: 'C3'
+comboMergeOneThroughThree:
+  <<: *one
+  <<: *two
+  <<: *three
+comboMergeThreeThroughOne:
+  <<: *three
+  <<: *two
+  <<: *one
+comboArrOneTwoThree:
+  <<: [*one, *two, *three]
+comboArrThreeTwoOne:
+  <<: [*three, *two, *one]
+comboMergeArrThenOverride:
+  <<: [*three, *two, *one]
+  a: 'A-override'
+  b: 'B-override'
+  c: 'C-override'
+comboaOverrideThenMergeArr:
+  a: 'A-override'
+  b: 'B-override'
+  c: 'C-override'
+  <<: [*three, *two, *one]
