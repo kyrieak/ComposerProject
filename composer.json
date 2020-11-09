@@ -2,7 +2,7 @@
     "name": "kakopczynski/composer-project",
     "require": {
         "symfony/yaml": "^4.4",
-        "php": >=5.5.0"
+        "php": ">=5.5.0"
     },
     "require-dev": {
         "symfony/yaml": "^4.4"
