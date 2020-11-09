@@ -2,6 +2,7 @@
     "name": "kakopczynski/composer-project",
     "require": {
         "symfony/yaml": "^4.4"
+        "php": >=5.5.0"
     },
     "require-dev": {
         "symfony/yaml": "^4.4"
@@ -12,9 +13,6 @@
             "email": "kyrie.ak@gmail.com"
         }
     ],
-    "require": {
-        "php": ">=5.5.0"
-    },
     "autoload": {
         "psr-4": {
             "HelloWorld\\": "src/"
