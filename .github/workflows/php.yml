@@ -35,3 +35,9 @@ jobs:
 
     - name: Run test suite
       run: vendor/bin/phpunit --testdox tests
+  label:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Print Event Info
+      run: echo "github.base_ref: ${{github.base_ref}}\ngithub.head_ref${{github.head_ref}}"
