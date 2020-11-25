@@ -37,7 +37,10 @@ jobs:
       run: vendor/bin/phpunit --testdox tests
   label:
     runs-on: ubuntu-latest
+    env:
+      HEAD_REF: ${{github.head_ref}}
+      BASE_REF: ${{github.base_ref}}
     steps:
     - uses: actions/checkout@v2
     - name: Print Event Info
-      run: echo "github.base_ref: ${{github.base_ref}}\ngithub.head_ref${{github.head_ref}}"
+      run: echo "github.base_ref: ${{BASE_REF}}\ngithub.head_ref${{HEAD_REF}}"
