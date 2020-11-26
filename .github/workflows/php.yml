@@ -43,16 +43,16 @@ jobs:
     - name: Run tests on changed files
       run: |
         for filepath in steps.file_changes.outputs.files; do
-          if ${filepath:0:4} = 'src/'
+          if [${filepath:0:4} = 'src/']; then
             testpath = `expr match ${filepath:4} '\(.*(?!\.php))'`
             testpath = "tests/${testpath}Test.php"
           else
-            if ${filepath:0:6} = 'tests/'
+            if [${filepath:0:6} = 'tests/']; then
               testpath = filepath
             fi
           fi
           
-          if testpath
+          if [testpath]; then
             echo testpath
             vendor/bin/phpunit --testdox --filter testpath
           fi
