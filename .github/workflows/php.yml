@@ -37,12 +37,16 @@ jobs:
       run: vendor/bin/phpunit --testdox tests
     - id: file_changes
       uses: trilom/file-changes-action@v1.2.4
+      with:
+        fileOutput: 'csv'
     - name: Print file changes
       run: |
         echo "${{ steps.file_changes.outputs.files}}"
     - name: Run tests on changed files
       run: |
-        changedFiles=${{steps.file_changes.outputs.files}}
+        IFS=','
+        read -a changedFiles <<< ${{steps.file_changes.outputs.files}}
+        
         for filepath in "${changedFiles[@]}"; do
           testpath=false
           echo ${filepath}

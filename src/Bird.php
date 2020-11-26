@@ -28,5 +28,4 @@ class Bird {
     {
         $this->isFlying = false;
     }
-    // Try add change
 }
