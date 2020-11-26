@@ -49,7 +49,11 @@ jobs:
           else
             if ${filepath:0:6} = 'tests/'
               testpath = filepath
+            fi
+          fi
           
           if testpath
             echo testpath
             vendor/bin/phpunit --testdox --filter testpath
+          fi
+        done;
