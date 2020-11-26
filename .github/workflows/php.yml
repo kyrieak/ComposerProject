@@ -45,6 +45,7 @@ jobs:
         changedFiles=${{steps.file_changes.outputs.files}}
         for filepath in "${changedFiles[@]}"; do
           testpath=false
+          echo ${filepath}
           if [[ ${filepath:0:4} = "src/" ]]; then
             len=$((${#filepath} - 8))
             testpath=${filepath:4:${len}}
