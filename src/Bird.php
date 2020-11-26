@@ -28,4 +28,5 @@ class Bird {
     {
         $this->isFlying = false;
     }
+    // TODO add more methods
 }
