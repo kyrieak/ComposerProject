@@ -42,7 +42,8 @@ jobs:
         echo "${{ steps.file_changes.outputs.files}}"
     - name: Run tests on changed files
       run: |
-        for filepath in "${steps.file_changes.outputs.files[@]}"; do
+        changedFiles=${steps.file_changes.outputs.files
+        for filepath in "${changedFiles[@]}"; do
           testpath=false
           if [[ ${filepath:0:4} = "src/" ]]; then
             len=$((${#filepath} - 8))
