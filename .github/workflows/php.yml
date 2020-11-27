@@ -44,8 +44,10 @@ jobs:
         echo "${{ steps.file_changes.outputs.files}}"
     - name: Run tests on changed files
       run: |
+        changesfiles=${{steps.file_changes.outputs.files}}
+        changedfiles=${changedfiles:1:$((${#changedfiles} - 2))}
         IFS=','
-        read -a changedFiles <<< ${{steps.file_changes.outputs.files}}
+        read -a changedFiles <<< "$changedfiles"
         
         for filepath in "${changedFiles[@]}"; do
           testpath=false
