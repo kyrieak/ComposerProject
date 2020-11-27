@@ -28,4 +28,6 @@ class Bird {
     {
         $this->isFlying = false;
     }
+    // Add comment to trigger workflow step
 }
+

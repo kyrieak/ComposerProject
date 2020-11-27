@@ -62,7 +62,7 @@ jobs:
             fi
           fi
 
-          if [[ ${testpath} ]]; then
+          if [[ ${testpath} != false ]]; then
             vendor/bin/phpunit --testdox ${testpath}
           fi
         done
