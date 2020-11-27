@@ -62,3 +62,15 @@ jobs:
             vendor/bin/phpunit --testdox ${testpath}
           fi
         done
+  issues:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: TODO to Issue
+      uses: alstr/todo-to-issue-action@v2.3
+      with:
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        LABEL: "// TODO"
+        COMMENT_MARKER: "//"
+
