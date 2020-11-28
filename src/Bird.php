@@ -18,7 +18,6 @@ class Bird {
     {
         return $this->isFlying;
     }
-    // TODO: check how many issue created
     public function fly()
     {
         $this->isFlying = true;
