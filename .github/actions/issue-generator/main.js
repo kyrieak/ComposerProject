@@ -13,12 +13,15 @@ const parseDiffForIssue = async (octokit, base, head) => {
     console.log('what is files', resp.data.files)
 
     // TODO 1
+    // TODO 1a
     files.forEach((file) => {
         let matches = file.patch.match(/^\+[^\r\n]*TODO[^\r\n]*$/gm)
-        
-        matches.forEach((match) => {
-            console.log('FOUND MATCH!', match)
-        })
+
+        if (matches) {
+            matches.forEach((match) => {
+                console.log('FOUND MATCH!', match)
+            })  
+        } 
     })
 }
 
