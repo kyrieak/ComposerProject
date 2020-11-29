@@ -1,4 +1,4 @@
-export default async function parseDiffForIssue(octokit) {
+module.exports = async (octokit, base, head) => {
     var resp = await octokit.repos.compareCommits({
         'kyrieak',
         'ComposerProject',
