@@ -3,8 +3,8 @@ const github = require('@actions/github');
 
 const parseDiffForIssue = async (octokit, base, head) => {
     var resp = await octokit.repos.compareCommits({
-        'kyrieak',
-        'ComposerProject',
+        owner: 'kyrieak',
+        repo: 'ComposerProject',
         base,
         head,
     });
