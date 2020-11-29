@@ -2,7 +2,7 @@ name: "Issue Generator"
 description: "Practice action to learn about GitHub actions and issue creation"
 runs:
   using: "node12"
-  main: "main.mjs"
+  main: "main.js"
 inputs:
   before_sha:
     description: "The SHA of the last pushed commit (automatically set)"
