@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const parseDiffForIssue = require("./parseDiffFromIssue.js");
-const formatIssuePayload = require("./formatIssuePayload.js");
+const parseDiffForIssue = require("parseDiffFromIssue.js");
+const formatIssuePayload = require("formatIssuePayload.js");
 
 async function run() {
 
