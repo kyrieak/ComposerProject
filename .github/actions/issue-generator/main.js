@@ -9,8 +9,19 @@ async function run() {
         console.log('latest_sha: ', core.getInput('latest_sha')); 
         const octokit = github.getOctokit(core.getInput('token'));
         const context = github.context;
+        const event_name = core.getInput('event_name')
+
+        let branchname;
+
         console.log('event_name: ', core.getInput('event_name'));
-        console.log('head_ref: ', core.getInput('head_ref'));
+
+        if (event_name === 'push') {
+            branchname = core.getInput('ref')
+        } else if (event_name === 'pull_request') {
+            branchname = core.getInput('head_ref');
+        }
+        
+        console.log('branchname: ', branchname);
 
         //parseDiffForIssue(octokit)
 

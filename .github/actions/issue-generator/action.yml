@@ -8,6 +8,10 @@ inputs:
     description: "Event name"
     required: false
     default: "${{ github.event_name }}"
+  ref:
+    description: "ref"
+    required: false
+    default: "${{ github.ref }}"
   head_ref:
     description: "Head ref"
     required: false
