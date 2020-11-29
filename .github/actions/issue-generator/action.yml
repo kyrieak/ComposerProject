@@ -1,0 +1,17 @@
+name: "Issue Generator"
+description: "Practice action to learn about GitHub actions and issue creation"
+runs:
+  using: "node12"
+  main: "main.js"
+inputs:
+  before_sha:
+    description: "The SHA of the last pushed commit (automatically set)"
+    required: true
+    default: "${{ github.event.before }}"
+  latest_sha:
+    description: "The SHA of the latest commit (automatically set)"
+    required: true
+    default: "${{ github.sha }}"
+  token:
+    description: "The GitHub access token to allow us to retrieve, create and update issues (automatically set)"
+    required: true

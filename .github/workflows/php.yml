@@ -66,11 +66,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: TODO to Issue
-      uses: alstr/todo-to-issue-action@v2.3
-      with:
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        LABEL: "// TODO"
-        COMMENT_MARKER: "//"
+      - name: Learning actions and issues
+        uses: ./.github/actions/issue-generator
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+#    - uses: actions/checkout@v2
+#    - name: TODO to Issue
+#      uses: alstr/todo-to-issue-action@v2.3
+#      with:
+#        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        LABEL: "// TODO"
+#        COMMENT_MARKER: "//"
 
