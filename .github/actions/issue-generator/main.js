@@ -1,8 +1,21 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const path = require('path');
-const parseDiffForIssue = require(path.resolve(__dirname, "./parseDiffFromIssue.js"));
-const formatIssuePayload = require(path.resolve(__dirname, "./formatIssuePayload.js"));
+
+const parseDiffForIssue = async (octokit, base, head) => {
+    var resp = await octokit.repos.compareCommits({
+        'kyrieak',
+        'ComposerProject',
+        base,
+        head,
+    });
+}
+
+const formatIssuePayload = (issueInfo, branchname) => {
+    return {
+        title: 'Placeholder',
+        body: `[${ branchname }]`
+    }
+}
 
 async function run() {
 
