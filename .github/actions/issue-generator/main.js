@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-import parseDiffForIssue from "./parseDiffFromIssue.js";
+//import parseDiffForIssue from "./parseDiffFromIssue.js";
 
 async function run() {
 
