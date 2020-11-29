@@ -16,7 +16,7 @@ async function run() {
         console.log('event_name: ', core.getInput('event_name'));
 
         if (event_name === 'push') {
-            branchname = core.getInput('ref')
+            branchname = core.getInput('ref').substring('refs/heads/'.length)
         } else if (event_name === 'pull_request') {
             branchname = core.getInput('head_ref');
         }
