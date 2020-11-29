@@ -10,7 +10,7 @@ async function run() {
         const octokit = github.getOctokit(core.getInput('token'));
         const context = github.context;
         console.log('github.event_name: ', github.event_name);
-        console.log('github.head_ref: ', github.head_ref');
+        console.log('github.head_ref: ', github.head_ref);
 
         //parseDiffForIssue(octokit)
 
