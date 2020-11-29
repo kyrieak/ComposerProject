@@ -4,6 +4,14 @@ runs:
   using: "node12"
   main: "main.js"
 inputs:
+  event_name:
+    description: "Event name"
+    required: false
+    default: "${{ github.event_name }}"
+  head_ref:
+    description: "Head ref"
+    required: false
+    default: "${{ github.head_ref }}"
   before_sha:
     description: "The SHA of the last pushed commit (automatically set)"
     required: true
