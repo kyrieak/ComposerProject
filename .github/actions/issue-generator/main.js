@@ -23,3 +23,5 @@ async function run() {
         console.error('error: ', error);
     }
 }
+
+run();
