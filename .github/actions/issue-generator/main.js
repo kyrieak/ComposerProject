@@ -9,7 +9,7 @@ const parseDiffForIssue = async (octokit, base, head) => {
         head,
     });
 
-    const files = resp.files
+    const files = resp.data.files
 
     // TODO 1
     files.forEach((file) => {
