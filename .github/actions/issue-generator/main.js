@@ -8,8 +8,20 @@ const parseDiffForIssue = async (octokit, base, head) => {
         base,
         head,
     });
+
+    const files = resp.files
+
+    // TODO 1
+    files.forEach((file) => {
+        let matches = file.patch.match(/^\+[^\r\n]*TODO[^\r\n]*$/gm)
+        
+        matches.forEach((match) => {
+            console.log('FOUND MATCH!', match)
+        })
+    })
 }
 
+// TODO 2
 const formatIssuePayload = (issueInfo, branchname) => {
     return {
         title: 'Placeholder',
@@ -17,6 +29,7 @@ const formatIssuePayload = (issueInfo, branchname) => {
     }
 }
 
+// TODO 3
 async function run() {
 
     try {
@@ -33,7 +46,8 @@ async function run() {
         } else if (event_name === 'pull_request') {
             branchname = core.getInput('head_ref');
         }
-        
+
+        // TODO 4
         parseDiffForIssue(octokit, before_sha, latest_sha)
 
         /*octokit.issues.create({
