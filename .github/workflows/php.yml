@@ -66,6 +66,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
       - name: Learning actions and issues
         uses: ./.github/actions/issue-generator
         with:
