@@ -9,8 +9,8 @@ async function run() {
         console.log('latest_sha: ', core.getInput('latest_sha')); 
         const octokit = github.getOctokit(core.getInput('token'));
         const context = github.context;
-        console.log('github.event_name: ', github.event_name);
-        console.log('github.head_ref: ', github.head_ref);
+        console.log('GITHUB_EVENT_NAME: ', GITHUB_EVENT_NAME);
+        console.log('GITHUB_HEAD_REF: ', GITHUB_HEAD_REF);
 
         //parseDiffForIssue(octokit)
 
