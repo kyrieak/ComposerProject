@@ -1,10 +1,10 @@
 name: PHP Composer
 
 on:
-  push:
-    branches: [ main ]
+  #push:
+  #  branches: [ '*' ]
   pull_request:
-    branches: [ main ]
+    branches: [ 'main' ]
 
 jobs:
   build:
@@ -33,5 +33,58 @@ jobs:
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-    - name: Run test suite
-      run: vendor/bin/phpunit --testdox tests
+    #- name: Run test suite
+    #  run: vendor/bin/phpunit --testdox tests
+    - id: file_changes
+      uses: trilom/file-changes-action@v1.2.4
+      with:
+        fileOutput: 'csv'
+    - name: Run tests on changed files
+      run: |
+        changedfiles=${{steps.file_changes.outputs.files}}
+        changedfiles=${changedfiles:1:$((${#changedfiles} - 2))}
+        IFS=','
+        read -a changedFiles <<< "$changedfiles"
+        
+        for filepath in "${changedFiles[@]}"; do
+          testpath=false
+          if [[ ${filepath:0:4} = "src/" ]]; then
+            len=$((${#filepath} - 8))
+            testpath=${filepath:4:${len}}
+            testpath="tests/${testpath}Test.php"
+          else
+            if [[ ${filepath:0:6} = "tests/" ]]; then
+              testpath=${filepath}
+            fi
+          fi
+
+          if [[ ${testpath} != false ]]; then
+            vendor/bin/phpunit --testdox ${testpath}
+          fi
+        done
+  issues:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: npm install
+      - id: issue_generator
+        uses: ./.github/actions/issue-generator
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Receive Issue Numbers
+        run: |
+          newIssueNumbers=${{steps.issue_generator.outputs.newIssueNumbers}}
+          echo "new issue numbers:"
+          echo "${newIssueNumbers}"
+#      - uses: actions/checkout@v2
+#      - name: TODO to Issue
+#        uses: alstr/todo-to-issue-action@v2.3
+#        with:
+#          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          LABEL: "// TODO"
+#          COMMENT_MARKER: "//"
+

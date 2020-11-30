@@ -18,7 +18,6 @@ class Bird {
     {
         return $this->isFlying;
     }
-
     public function fly()
     {
         $this->isFlying = true;
@@ -29,3 +28,4 @@ class Bird {
         $this->isFlying = false;
     }
 }
+
