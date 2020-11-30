@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-// TODO 1a - probably clean info
+// TODO 1b - probably clean info
 const formatIssuePayload = (issueInfo, branchname) => {
     let infotable = `
         ${ hunk }
@@ -29,13 +29,13 @@ const parseDiffForIssue = async (octokit, base, head, branchname) => {
     let todos = []
 
     files.forEach((file) => {
-        let splitPatch = file.patch.split(/(@@ -\d+,\d+ \+\d+,\d @@)/gm)
+        let splitPatch = file.patch.split(/(@@ -\d+,\d+ \+\d+,\d+ @@)/gm)
         let hunkStr = ''
 
         console.log('what is splitPatch', splitPatch)
 
         splitPatch.forEach((hunkPiece, index) => {
-            if ((index % 2) === 0) {
+            if (hunkPiece.match(/@@ -\d+,\d+ \+\d+,\d+ @@/)) {
                 hunkStr = hunkPiece
             } else {
                 hunkStr += hunkPiece
@@ -79,7 +79,7 @@ async function run() {
 
         let issues = await parseDiffForIssue(octokit, before_sha, latest_sha, branchname)
 
-        // TODO 2a - just to trigger issue
+        // TODO 2b - just to trigger issue
         issues.forEach((issue) => {
             octokit.issues.create({
                 ...context.repo,
