@@ -1,12 +1,12 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-// TODO provide more context ...
+// TODO provide more context, try again
 const formatIssuePayload = (issueInfo, branchname) => {
     let infotable = `
-        | branch         | file          |
+        | branch         | file                    |
         |-|-|
-        | ${ branchname} | ${ filename } |`
+        | ${ branchname} | ${ issueInfo.filename } |`
 
     return {
         title: issueInfo.todoLine.substring(issueInfo.todoLine.indexOf('TODO')),
