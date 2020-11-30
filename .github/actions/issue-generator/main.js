@@ -89,11 +89,10 @@ async function run() {
             newIssues.push(newIssue)
         })
 
-        // TODO - to trigger new issue.
+        // TODO - to trigger new issue
         newIssues.forEach((newIssueP) => {
-            newIssueP.then((val) => {
-                console.log(val.data.id)
-            })
+            let val = await newIssueP
+            console.log('new issue: ', val.data.id)
         })
     } catch (error) {
         console.error('error: ', error);
