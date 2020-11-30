@@ -1,10 +1,10 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-// TODO 1b - probably clean info
+// TODO 1c - probably clean info
 const formatIssuePayload = (issueInfo, branchname) => {
     let infotable = `
-        ${ hunk }
+        ${ issueInfo.hunk }
 
         | branch         | file                    |
         |-|-|
@@ -79,7 +79,7 @@ async function run() {
 
         let issues = await parseDiffForIssue(octokit, before_sha, latest_sha, branchname)
 
-        // TODO 2b - just to trigger issue
+        // TODO 2c - just to trigger issue
         issues.forEach((issue) => {
             octokit.issues.create({
                 ...context.repo,
