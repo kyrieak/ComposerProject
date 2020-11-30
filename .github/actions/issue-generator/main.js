@@ -93,7 +93,7 @@ async function run() {
         newIssues.forEach((newIssueP) => {
             newIssueP.then((val) => {
                 console.log(val.data.id)
-            }
+            })
         })
     } catch (error) {
         console.error('error: ', error);
