@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-// TODO provide more context
+// TODO provide more context ...
 const formatIssuePayload = (issueInfo, branchname) => {
     let infotable = `
         | branch         | file          |
