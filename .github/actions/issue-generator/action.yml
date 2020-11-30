@@ -27,3 +27,6 @@ inputs:
   token:
     description: "The GitHub access token to allow us to retrieve, create and update issues (automatically set)"
     required: true
+outputs:
+  newIssueNumbers:
+    description: "Newly Created Issue Numbers"

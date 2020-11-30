@@ -71,11 +71,15 @@ jobs:
         with:
           node-version: '12'
       - run: npm install
-      - name: Learning actions and issues
+      - id: issue_generator
         uses: ./.github/actions/issue-generator
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
+      - name: Receive Issue Numbers
+        run: |
+          newIssueNumbers=${{steps.issue_generator.newIssueNumbers}}
+          echo "new issue numbers:"
+          echo "${newIssueNumbers}"
 #      - uses: actions/checkout@v2
 #      - name: TODO to Issue
 #        uses: alstr/todo-to-issue-action@v2.3

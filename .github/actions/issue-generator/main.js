@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-// TODO 1e - probably clean info
+// TODO 1f - probably clean info
 const formatIssuePayload = (issueInfo, branchname) => {
     let issueBody = `\`\`\`\n` + issueInfo.hunk + `\n\`\`\`\n`
 
@@ -29,8 +29,6 @@ const parseDiffForIssue = async (octokit, base, head, branchname) => {
     files.forEach((file) => {
         let splitPatch = file.patch.split(/(@@ -\d+,\d+ \+\d+,\d+ @@)/gm)
         let hunkStr = ''
-
-        console.log('what is splitPatch', splitPatch)
 
         splitPatch.forEach((hunkPiece, index) => {
             if (hunkPiece.match(/@@ -\d+,\d+ \+\d+,\d+ @@/)) {
@@ -77,7 +75,7 @@ async function run() {
 
         let issues = await parseDiffForIssue(octokit, before_sha, latest_sha, branchname)
         let newIssues = []
-        // TODO 2e - just to trigger issue
+        // TODO 2f - just to trigger issue
         issues.forEach((issue) => {
             let newIssue = octokit.issues.create({
                 ...context.repo,
@@ -91,9 +89,8 @@ async function run() {
 
         // TODO - to trigger new issue
         let newIssueResponses = await Promise.all(newIssues)
-        newIssueResponses.forEach((resp) => {
-            console.log('new issue: ', resp.data.id)
-        })
+        newIssueResponses = newIssueResponses.map((resp) => { return resp.data.number })
+        core.setOutput('newIssueNumbers', JSON.stringify(newIssueResponses))
     } catch (error) {
         console.error('error: ', error);
     }
