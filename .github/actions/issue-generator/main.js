@@ -1,9 +1,11 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-// TODO provide more context, try again
+// TODO probably clean info
 const formatIssuePayload = (issueInfo, branchname) => {
     let infotable = `
+        ${ hunk }
+
         | branch         | file                    |
         |-|-|
         | ${ branchname} | ${ issueInfo.filename } |`
@@ -23,21 +25,33 @@ const parseDiffForIssue = async (octokit, base, head, branchname) => {
     });
 
     const files = resp.data.files
+
     let todos = []
 
     files.forEach((file) => {
-        let matches = file.patch.match(/^\+[^\r\n]*TODO[^\r\n]*$/gm)
+        let splitPatch = file.patch.split(/(@@ -\d+,\d+ \+\d+,\d @@)/gm)
+        let hunkStr = ''
 
-        if (matches) {
-            matches.forEach((match) => {
-                console.log('FOUND MATCH!', match)
-                todos.push(formatIssuePayload({
-                    todoLine: match,
-                    filename: file.filename,
-                    patch: file.patch
-                }, branchname))
-            })
-        }
+        splitPatch.forEach((hunkPiece, index) => {
+            if ((index % 2) === 0) {
+                hunkStr = hunkPiece
+            } else {
+                hunkStr += hunkPiece
+
+                let matches = hunkPiece.match(/^\+[^\r\n]*TODO[^\r\n]*$/gm)
+
+                if (matches) {
+                    matches.forEach((match) => {
+                        console.log('FOUND MATCH!', match)
+                        todos.push(formatIssuePayload({
+                            todoLine: match,
+                            filename: file.filename,
+                            hunk: hunkStr
+                        }, branchname))
+                    })
+                }
+            }
+        })
     })
 
     return todos
@@ -63,6 +77,7 @@ async function run() {
 
         let issues = await parseDiffForIssue(octokit, before_sha, latest_sha, branchname)
 
+        // TODO just to trigger issue
         issues.forEach((issue) => {
             octokit.issues.create({
                 ...context.repo,
