@@ -1,6 +1,14 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+// TODO 2
+const formatIssuePayload = (issueInfo, branchname) => {
+    return {
+        title: issueInfo.todoLine,
+        body: `${ issueInfo.filename }\n[${ branchname }]`
+    }
+}
+
 const parseDiffForIssue = async (octokit, base, head) => {
     var resp = await octokit.repos.compareCommits({
         owner: 'kyrieak',
@@ -10,30 +18,29 @@ const parseDiffForIssue = async (octokit, base, head) => {
     });
 
     const files = resp.data.files
-    console.log('what is files', resp.data.files)
+    let todos = []
 
-    // TODO 1
-    // TODO 1a
+    // TODO 1b
     files.forEach((file) => {
         let matches = file.patch.match(/^\+[^\r\n]*TODO[^\r\n]*$/gm)
 
         if (matches) {
             matches.forEach((match) => {
                 console.log('FOUND MATCH!', match)
-            })  
-        } 
+                todos.append(formatIssuePayload({
+                    todoLine: match,
+                    filename: file.filename,
+                    patch: file.patch
+                }))
+            })
+        }
     })
+
+    return todos
 }
 
-// TODO 2
-const formatIssuePayload = (issueInfo, branchname) => {
-    return {
-        title: 'Placeholder',
-        body: `[${ branchname }]`
-    }
-}
 
-// TODO 3
+// TODO 3b
 async function run() {
 
     try {
@@ -52,13 +59,15 @@ async function run() {
         }
 
         // TODO 4
-        parseDiffForIssue(octokit, before_sha, latest_sha)
+        let issues = await parseDiffForIssue(octokit, before_sha, latest_sha)
 
-        /*octokit.issues.create({
-            ...context.repo,
-            title: 'Hello',
-            body: '[' + branchname + ']',
-        });*/
+        issues.forEach((issue) => {
+            octokit.issues.create({
+                ...context.repo,
+                title: issue.title,
+                body: issue.body,
+            });
+        })
     } catch (error) {
         console.error('error: ', error);
     }
