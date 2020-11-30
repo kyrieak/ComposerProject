@@ -89,10 +89,11 @@ async function run() {
             newIssues.push(newIssue)
         })
 
-        // TODO - to trigger new issue
-        Promise.all(newIssues)
-        .then(() => {
-            console.log(newIssues.map((issue) => { return issue.data.id }))
+        // TODO - to trigger new issue.
+        newIssues.forEach((newIssueP) => {
+            newIssueP.then((val) => {
+                console.log(val.data.id)
+            }
         })
     } catch (error) {
         console.error('error: ', error);
