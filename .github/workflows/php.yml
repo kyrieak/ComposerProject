@@ -77,7 +77,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Receive Issue Numbers
         run: |
-          newIssueNumbers=${{steps.issue_generator.newIssueNumbers}}
+          newIssueNumbers=${{steps.issue_generator.outputs.newIssueNumbers}}
           echo "new issue numbers:"
           echo "${newIssueNumbers}"
 #      - uses: actions/checkout@v2
