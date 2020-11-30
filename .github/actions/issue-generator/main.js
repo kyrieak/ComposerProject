@@ -76,7 +76,7 @@ async function run() {
         }
 
         let issues = await parseDiffForIssue(octokit, before_sha, latest_sha, branchname)
-
+        let newIssues = []
         // TODO 2e - just to trigger issue
         issues.forEach((issue) => {
             let newissue = octokit.issues.create({
@@ -86,8 +86,13 @@ async function run() {
                 labels: ['todo']
             });
 
-            // TODO find issue number and set output.
-            console.log(newissue)
+            newIssues.push(newIssue)
+        })
+
+        // TODO - to trigger new issue
+        Promise.all(newIssues)
+        .then(() => {
+            console.log(newIssues)
         })
     } catch (error) {
         console.error('error: ', error);
