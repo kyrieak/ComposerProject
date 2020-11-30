@@ -79,7 +79,7 @@ async function run() {
         let newIssues = []
         // TODO 2e - just to trigger issue
         issues.forEach((issue) => {
-            let newissue = octokit.issues.create({
+            let newIssue = octokit.issues.create({
                 ...context.repo,
                 title: issue.title,
                 body: issue.body,
@@ -89,7 +89,7 @@ async function run() {
             newIssues.push(newIssue)
         })
 
-        // TODO - to trigger new issue
+        // TODO - to trigger new issue.
         Promise.all(newIssues)
         .then(() => {
             console.log(newIssues)
