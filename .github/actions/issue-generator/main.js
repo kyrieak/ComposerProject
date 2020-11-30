@@ -20,14 +20,14 @@ const parseDiffForIssue = async (octokit, base, head) => {
     const files = resp.data.files
     let todos = []
 
-    // TODO 1b
+    // TODO 1c
     files.forEach((file) => {
         let matches = file.patch.match(/^\+[^\r\n]*TODO[^\r\n]*$/gm)
 
         if (matches) {
             matches.forEach((match) => {
                 console.log('FOUND MATCH!', match)
-                todos.append(formatIssuePayload({
+                todos.push(formatIssuePayload({
                     todoLine: match,
                     filename: file.filename,
                     patch: file.patch
@@ -40,7 +40,7 @@ const parseDiffForIssue = async (octokit, base, head) => {
 }
 
 
-// TODO 3b
+// TODO 3c
 async function run() {
 
     try {
