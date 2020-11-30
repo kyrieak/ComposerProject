@@ -1,18 +1,16 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-// TODO 1d - probably clean info
+// TODO 1e - probably clean info
 const formatIssuePayload = (issueInfo, branchname) => {
-    let infotable = `
-        \`\`\`
-        ${ issueInfo.hunk }
-        \`\`\`
-        **branch:** ${branchname}
-        **file:** ${issueInfo.filename}`
+    let issueBody = `\`\`\`\n` + issueInfo.hunk + `\n\`\`\`\n`
+
+    issueBody += `**branch:** ${branchname}\n`
+    issueBody += `**file:** ${issueInfo.filename}`
 
     return {
         title: issueInfo.todoLine.substring(issueInfo.todoLine.indexOf('TODO')),
-        body: infotable
+        body: issueBody
     }
 }
 
@@ -79,7 +77,7 @@ async function run() {
 
         let issues = await parseDiffForIssue(octokit, before_sha, latest_sha, branchname)
 
-        // TODO 2d - just to trigger issue
+        // TODO 2e - just to trigger issue
         issues.forEach((issue) => {
             octokit.issues.create({
                 ...context.repo,
