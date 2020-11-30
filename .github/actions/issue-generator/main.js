@@ -3,9 +3,14 @@ const github = require('@actions/github');
 
 // TODO provide more context
 const formatIssuePayload = (issueInfo, branchname) => {
+    let infotable = `
+        | branch         | file          |
+        |-|-|
+        | ${ branchname} | ${ filename } |`
+
     return {
         title: issueInfo.todoLine.substring(issueInfo.todoLine.indexOf('TODO')),
-        body: `${ issueInfo.filename }\n[${ branchname }]`
+        body: infotable
     }
 }
 
@@ -63,6 +68,7 @@ async function run() {
                 ...context.repo,
                 title: issue.title,
                 body: issue.body,
+                labels: ['todo']
             });
         })
     } catch (error) {
