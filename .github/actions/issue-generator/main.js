@@ -79,12 +79,15 @@ async function run() {
 
         // TODO 2e - just to trigger issue
         issues.forEach((issue) => {
-            octokit.issues.create({
+            let issue = octokit.issues.create({
                 ...context.repo,
                 title: issue.title,
                 body: issue.body,
                 labels: ['todo']
             });
+
+            // TODO find issue number and set output
+            console.log(issue)
         })
     } catch (error) {
         console.error('error: ', error);
