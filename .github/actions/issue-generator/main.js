@@ -1,15 +1,15 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-// TODO 2
+// TODO provide more context
 const formatIssuePayload = (issueInfo, branchname) => {
     return {
-        title: issueInfo.todoLine,
+        title: issueInfo.todoLine.substring(issueInfo.todoLine.indexOf('TODO')),
         body: `${ issueInfo.filename }\n[${ branchname }]`
     }
 }
 
-const parseDiffForIssue = async (octokit, base, head) => {
+const parseDiffForIssue = async (octokit, base, head, branchname) => {
     var resp = await octokit.repos.compareCommits({
         owner: 'kyrieak',
         repo: 'ComposerProject',
@@ -20,7 +20,6 @@ const parseDiffForIssue = async (octokit, base, head) => {
     const files = resp.data.files
     let todos = []
 
-    // TODO 1c
     files.forEach((file) => {
         let matches = file.patch.match(/^\+[^\r\n]*TODO[^\r\n]*$/gm)
 
@@ -31,7 +30,7 @@ const parseDiffForIssue = async (octokit, base, head) => {
                     todoLine: match,
                     filename: file.filename,
                     patch: file.patch
-                }))
+                }, branchname))
             })
         }
     })
@@ -40,7 +39,6 @@ const parseDiffForIssue = async (octokit, base, head) => {
 }
 
 
-// TODO 3c
 async function run() {
 
     try {
@@ -58,8 +56,7 @@ async function run() {
             branchname = core.getInput('head_ref');
         }
 
-        // TODO 4
-        let issues = await parseDiffForIssue(octokit, before_sha, latest_sha)
+        let issues = await parseDiffForIssue(octokit, before_sha, latest_sha, branchname)
 
         issues.forEach((issue) => {
             octokit.issues.create({
