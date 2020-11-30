@@ -89,10 +89,10 @@ async function run() {
             newIssues.push(newIssue)
         })
 
-        // TODO - to trigger new issue.
+        // TODO - to trigger new issue
         Promise.all(newIssues)
         .then(() => {
-            console.log(newIssues)
+            console.log(newIssues.map((issue) => { return issue.data.id }))
         })
     } catch (error) {
         console.error('error: ', error);
