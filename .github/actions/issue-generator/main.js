@@ -89,9 +89,9 @@ async function run() {
             newIssues.push(newIssue)
         })
 
-        // TODO - to trigger new issue.
+        // TODO - to trigger new issue
         let newIssueResponses = await Promise.all(newIssues)
-        newIssuesResponses.forEach((resp) => {
+        newIssueResponses.forEach((resp) => {
             console.log('new issue: ', resp.data.id)
         })
     } catch (error) {
